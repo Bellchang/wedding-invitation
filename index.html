@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#a72e38" />
     <title>我们的婚礼邀请函</title>
     <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preload" href="./wedding-music.mp3" as="audio" type="audio/mpeg" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -30,7 +31,7 @@
         <div class="rings" aria-hidden="true"><i></i><i></i></div>
         <h1>昌然松 <em>&amp;</em> 陈思历</h1>
         <p class="hero-copy">从此，两姓联姻<br />一堂缔约，良缘永结</p>
-        <a class="scroll-cue" href="#details">向上滑动，开启邀请</a>
+        <button class="scroll-cue" type="button" data-next>点击开启邀请</button>
       </section>
 
       <section class="message panel" id="details">
@@ -75,9 +76,8 @@
           <button class="submit" type="submit">提交回执</button>
           <p class="form-result" id="formResult" aria-live="polite"></p>
         </form>
+        <footer class="rsvp-footer">昌然松 &amp; 陈思历 敬邀<br /><span>愿所有美好，如期而至</span></footer>
       </section>
-
-      <footer>昌然松 &amp; 陈思历 敬邀<br /><span>愿所有美好，如期而至</span></footer>
     </main>
     <script src="./app.js"></script>
   </body>
