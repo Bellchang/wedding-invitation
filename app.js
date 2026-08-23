@@ -3,6 +3,7 @@ const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 const entryGate = document.querySelector('#entryGate');
 const enterInvitation = document.querySelector('#enterInvitation');
+const invitation = document.querySelector('.invitation');
 
 function showMusicState(isPlaying, failed = false) {
   musicButton.classList.toggle('playing', isPlaying);
@@ -33,6 +34,7 @@ backgroundMusic.addEventListener('play', () => showMusicState(true));
 backgroundMusic.addEventListener('pause', () => showMusicState(false));
 
 async function startInvitation() {
+  backgroundMusic.currentTime = 0;
   const started = await playMusic();
   if (!started) {
     enterInvitation.textContent = '请再轻触一次开启音乐';
@@ -43,16 +45,12 @@ async function startInvitation() {
 }
 enterInvitation.addEventListener('click', startInvitation);
 
-// 微信内置浏览器在桥接就绪后通常允许触发音频播放；普通移动浏览器则在首次触摸时重试。
-function requestAutoplay() { playMusic(); }
-document.addEventListener('WeixinJSBridgeReady', () => {
-  if (window.WeixinJSBridge) window.WeixinJSBridge.invoke('getNetworkType', {}, requestAutoplay);
-  else requestAutoplay();
-}, false);
-window.addEventListener('pageshow', requestAutoplay);
-document.addEventListener('touchstart', requestAutoplay, { once: true, passive: true });
-document.addEventListener('click', requestAutoplay, { once: true, passive: true });
-requestAutoplay();
+const pageObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+  });
+}, { root: invitation, threshold: 0.42 });
+document.querySelectorAll('.panel').forEach(panel => pageObserver.observe(panel));
 
 const form = document.querySelector('#rsvpForm');
 const result = document.querySelector('#formResult');
