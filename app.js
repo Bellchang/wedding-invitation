@@ -2,20 +2,44 @@ const musicButton = document.querySelector('#musicButton');
 const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 
-async function toggleMusic() {
-  if (!backgroundMusic.paused) {
-    backgroundMusic.pause();
-    musicButton.classList.remove('playing'); musicText.textContent = '音乐';
-    return;
-  }
+function showMusicState(isPlaying, failed = false) {
+  musicButton.classList.toggle('playing', isPlaying);
+  musicText.textContent = isPlaying ? '暂停' : failed ? '点击播放' : '音乐';
+  musicButton.setAttribute('aria-label', isPlaying ? '暂停背景音乐' : '播放背景音乐');
+}
+
+async function playMusic() {
+  if (!backgroundMusic.paused) return true;
   try {
     await backgroundMusic.play();
-    musicButton.classList.add('playing'); musicText.textContent = '暂停';
+    showMusicState(true);
+    return true;
   } catch {
-    musicText.textContent = '播放失败';
+    showMusicState(false, true);
+    return false;
   }
 }
+
+function toggleMusic() {
+  if (backgroundMusic.paused) return playMusic();
+  backgroundMusic.pause();
+  showMusicState(false);
+}
+
 musicButton.addEventListener('click', toggleMusic);
+backgroundMusic.addEventListener('play', () => showMusicState(true));
+backgroundMusic.addEventListener('pause', () => showMusicState(false));
+
+// 微信内置浏览器在桥接就绪后通常允许触发音频播放；普通移动浏览器则在首次触摸时重试。
+function requestAutoplay() { playMusic(); }
+document.addEventListener('WeixinJSBridgeReady', () => {
+  if (window.WeixinJSBridge) window.WeixinJSBridge.invoke('getNetworkType', {}, requestAutoplay);
+  else requestAutoplay();
+}, false);
+window.addEventListener('pageshow', requestAutoplay);
+document.addEventListener('touchstart', requestAutoplay, { once: true, passive: true });
+document.addEventListener('click', requestAutoplay, { once: true, passive: true });
+requestAutoplay();
 
 const form = document.querySelector('#rsvpForm');
 const result = document.querySelector('#formResult');
