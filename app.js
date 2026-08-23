@@ -3,7 +3,8 @@ const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 const entryGate = document.querySelector('#entryGate');
 const enterInvitation = document.querySelector('#enterInvitation');
-const invitation = document.querySelector('.invitation');
+const pages = [...document.querySelectorAll('.panel')];
+let currentPage = 0;
 
 function showMusicState(isPlaying, failed = false) {
   musicButton.classList.toggle('playing', isPlaying);
@@ -45,12 +46,30 @@ async function startInvitation() {
 }
 enterInvitation.addEventListener('click', startInvitation);
 
-const pageObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+function showPage(index) {
+  if (index < 0 || index >= pages.length || index === currentPage) return;
+  pages[currentPage].classList.remove('is-active');
+  currentPage = index;
+  pages[currentPage].classList.add('is-active');
+}
+
+pages[0].classList.add('is-active');
+pages.slice(0, -1).forEach((page, index) => {
+  const nextButton = document.createElement('button');
+  nextButton.type = 'button';
+  nextButton.className = 'page-next';
+  nextButton.textContent = '点击继续';
+  nextButton.addEventListener('click', event => {
+    event.stopPropagation();
+    showPage(index + 1);
   });
-}, { root: invitation, threshold: 0.42 });
-document.querySelectorAll('.panel').forEach(panel => pageObserver.observe(panel));
+  page.append(nextButton);
+  page.addEventListener('click', event => {
+    if (!event.target.closest('a, button, input, select, textarea, label')) showPage(index + 1);
+  });
+});
+
+document.querySelector('[data-next]')?.addEventListener('click', () => showPage(1));
 
 const form = document.querySelector('#rsvpForm');
 const result = document.querySelector('#formResult');
