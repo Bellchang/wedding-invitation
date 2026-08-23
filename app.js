@@ -5,6 +5,7 @@ const entryGate = document.querySelector('#entryGate');
 const enterInvitation = document.querySelector('#enterInvitation');
 const pages = [...document.querySelectorAll('.panel')];
 let currentPage = 0;
+let isEnteringInvitation = false;
 
 function showMusicState(isPlaying, failed = false) {
   musicButton.classList.toggle('playing', isPlaying);
@@ -35,16 +36,28 @@ backgroundMusic.addEventListener('play', () => showMusicState(true));
 backgroundMusic.addEventListener('pause', () => showMusicState(false));
 
 async function startInvitation() {
+  if (isEnteringInvitation || entryGate.classList.contains('is-hidden')) return;
+  isEnteringInvitation = true;
+  enterInvitation.disabled = true;
+  enterInvitation.textContent = '正在开启音乐…';
   backgroundMusic.currentTime = 0;
   const started = await playMusic();
   if (!started) {
+    isEnteringInvitation = false;
+    enterInvitation.disabled = false;
     enterInvitation.textContent = '请再轻触一次开启音乐';
     return;
   }
   entryGate.classList.add('is-hidden');
   window.setTimeout(() => entryGate.remove(), 600);
 }
-enterInvitation.addEventListener('click', startInvitation);
+function handleInvitationEntry(event) {
+  if (event.type === 'touchend') event.preventDefault();
+  startInvitation();
+}
+entryGate.addEventListener('touchend', handleInvitationEntry, { passive: false });
+entryGate.addEventListener('click', handleInvitationEntry);
+backgroundMusic.load();
 
 function showPage(index) {
   if (index < 0 || index >= pages.length || index === currentPage) return;
