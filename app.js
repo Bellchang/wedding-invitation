@@ -1,6 +1,8 @@
 const musicButton = document.querySelector('#musicButton');
 const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
+const entryGate = document.querySelector('#entryGate');
+const enterInvitation = document.querySelector('#enterInvitation');
 
 function showMusicState(isPlaying, failed = false) {
   musicButton.classList.toggle('playing', isPlaying);
@@ -29,6 +31,17 @@ function toggleMusic() {
 musicButton.addEventListener('click', toggleMusic);
 backgroundMusic.addEventListener('play', () => showMusicState(true));
 backgroundMusic.addEventListener('pause', () => showMusicState(false));
+
+async function startInvitation() {
+  const started = await playMusic();
+  if (!started) {
+    enterInvitation.textContent = '请再轻触一次开启音乐';
+    return;
+  }
+  entryGate.classList.add('is-hidden');
+  window.setTimeout(() => entryGate.remove(), 600);
+}
+enterInvitation.addEventListener('click', startInvitation);
 
 // 微信内置浏览器在桥接就绪后通常允许触发音频播放；普通移动浏览器则在首次触摸时重试。
 function requestAutoplay() { playMusic(); }
