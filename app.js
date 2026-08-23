@@ -55,15 +55,6 @@ function showPage(index) {
 
 pages[0].classList.add('is-active');
 pages.slice(0, -1).forEach((page, index) => {
-  const nextButton = document.createElement('button');
-  nextButton.type = 'button';
-  nextButton.className = 'page-next';
-  nextButton.textContent = '点击继续';
-  nextButton.addEventListener('click', event => {
-    event.stopPropagation();
-    showPage(index + 1);
-  });
-  page.append(nextButton);
   page.addEventListener('click', event => {
     if (!event.target.closest('a, button, input, select, textarea, label')) showPage(index + 1);
   });
