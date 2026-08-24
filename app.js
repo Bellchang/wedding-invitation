@@ -2,6 +2,7 @@ const musicButton = document.querySelector('#musicButton');
 const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 const entryGate = document.querySelector('#entryGate');
+const openingScenes = [...document.querySelectorAll('[data-opening-scene]')];
 const pages = [...document.querySelectorAll('.panel')];
 const longStoryPanel = document.querySelector('.long-story-panel');
 const storyScenes = [...document.querySelectorAll('.story-scene')];
@@ -184,6 +185,12 @@ function startCanvasOpening() {
 function startOpeningAnimation() {
   if (openingAnimationStarted) return;
   openingAnimationStarted = true;
+  openingScenes.forEach((scene, index) => {
+    window.setTimeout(() => {
+      openingScenes.forEach(item => item.classList.remove('is-active'));
+      openingScenes[index].classList.add('is-active');
+    }, index * 3000);
+  });
   window.setTimeout(startInvitation, 12100);
 }
 
