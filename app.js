@@ -2,7 +2,6 @@ const musicButton = document.querySelector('#musicButton');
 const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 const entryGate = document.querySelector('#entryGate');
-const enterInvitation = document.querySelector('#enterInvitation');
 const entryVideo = document.querySelector('#entryVideo');
 const pages = [...document.querySelectorAll('.panel')];
 const longStoryPanel = document.querySelector('.long-story-panel');
@@ -83,46 +82,12 @@ function startPhotoLoop(page) {
   }, 4200);
 }
 
-async function startInvitation() {
+function startInvitation() {
   if (isEnteringInvitation || entryGate.classList.contains('is-hidden')) return;
   isEnteringInvitation = true;
-  enterInvitation.disabled = true;
-  enterInvitation.textContent = '正在开启音乐…';
-  backgroundMusic.currentTime = 0;
-  const started = await playMusic();
-  if (!started) {
-    isEnteringInvitation = false;
-    enterInvitation.disabled = false;
-    enterInvitation.textContent = '请再轻触一次开启音乐';
-    return;
-  }
   entryGate.classList.add('is-hidden');
   entryVideo.pause();
   window.setTimeout(() => entryGate.remove(), 600);
-}
-
-async function handleInvitationEntry() {
-  if (!openingAnimationStarted) {
-    openingAnimationStarted = true;
-    enterInvitation.disabled = true;
-    enterInvitation.textContent = '开场动画播放中…';
-    entryVideo.currentTime = 0;
-    entryGate.classList.add('is-video-ready');
-    entryVideo.style.opacity = '1';
-    document.querySelector('.entry-fallback').style.opacity = '0';
-    playMusic();
-    try {
-      await entryVideo.play();
-      revealEntryVideo();
-      enterInvitation.disabled = false;
-      enterInvitation.innerHTML = '点击进入邀请函 <span>→</span>';
-    } catch {
-      enterInvitation.disabled = false;
-      enterInvitation.innerHTML = '点击进入邀请函 <span>→</span>';
-    }
-    return;
-  }
-  startInvitation();
 }
 
 function showPage(index) {
@@ -144,7 +109,6 @@ function showStoryScene(index) {
 musicButton.addEventListener('click', toggleMusic);
 backgroundMusic.addEventListener('play', () => showMusicState(true));
 backgroundMusic.addEventListener('pause', () => showMusicState(false));
-entryGate.addEventListener('click', handleInvitationEntry);
 backgroundMusic.load();
 function revealEntryVideo() {
   if (entryVideo.currentTime <= 0.05) return;
@@ -155,7 +119,16 @@ function revealEntryVideo() {
 
 entryVideo.addEventListener('playing', revealEntryVideo);
 entryVideo.addEventListener('timeupdate', revealEntryVideo, { once: true });
-entryVideo.play().then(revealEntryVideo).catch(() => {});
+function startOpeningAnimation() {
+  if (openingAnimationStarted) return;
+  openingAnimationStarted = true;
+  entryVideo.currentTime = 0;
+  entryVideo.play().then(revealEntryVideo).catch(() => {});
+  window.setTimeout(startInvitation, 8200);
+}
+
+startOpeningAnimation();
+document.addEventListener('WeixinJSBridgeReady', startOpeningAnimation, { once: true });
 
 initializePhotos();
 startPhotoLoop(pages[currentPage]);
