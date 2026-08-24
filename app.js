@@ -3,6 +3,7 @@ const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 const entryGate = document.querySelector('#entryGate');
 const entryVideo = document.querySelector('#entryVideo');
+const entryCanvas = document.querySelector('#entryCanvas');
 const pages = [...document.querySelectorAll('.panel')];
 const longStoryPanel = document.querySelector('.long-story-panel');
 const storyScenes = [...document.querySelectorAll('.story-scene')];
@@ -117,13 +118,76 @@ function revealEntryVideo() {
   document.querySelector('.entry-fallback').style.opacity = '0';
 }
 
-entryVideo.addEventListener('playing', revealEntryVideo);
-entryVideo.addEventListener('timeupdate', revealEntryVideo, { once: true });
+function startCanvasOpening() {
+  if (!entryCanvas) return;
+  const context = entryCanvas.getContext('2d');
+  const image = new Image();
+  const particles = Array.from({ length: 34 }, (_, index) => ({
+    x: (index * 79 % 997) / 997,
+    y: (index * 151 % 991) / 991,
+    size: 1.4 + index % 3,
+    speed: 8 + index % 7
+  }));
+  let imageReady = false;
+
+  function resize() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    entryCanvas.width = Math.round(window.innerWidth * ratio);
+    entryCanvas.height = Math.round(window.innerHeight * ratio);
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  function draw(now) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const time = now / 1000;
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = '#1a1011';
+    context.fillRect(0, 0, width, height);
+    if (imageReady) {
+      const zoom = 1.06 + Math.sin(time * .42) * .025;
+      const scale = Math.max(width / image.width, height / image.height) * zoom;
+      const drawnWidth = image.width * scale;
+      const drawnHeight = image.height * scale;
+      const x = (width - drawnWidth) / 2 + Math.sin(time * .28) * 12;
+      const y = (height - drawnHeight) / 2 + Math.cos(time * .24) * 10;
+      context.drawImage(image, x, y, drawnWidth, drawnHeight);
+    }
+    const shade = context.createLinearGradient(0, 0, 0, height);
+    shade.addColorStop(0, 'rgba(11, 29, 46, .08)');
+    shade.addColorStop(.52, 'rgba(40, 15, 8, .20)');
+    shade.addColorStop(1, 'rgba(29, 7, 7, .72)');
+    context.fillStyle = shade;
+    context.fillRect(0, 0, width, height);
+    const sweep = ((time * 110) % (width * 2.3)) - width * .9;
+    const beam = context.createLinearGradient(sweep - width * .42, 0, sweep + width * .42, height);
+    beam.addColorStop(0, 'rgba(255, 214, 133, 0)');
+    beam.addColorStop(.5, 'rgba(255, 220, 146, .28)');
+    beam.addColorStop(1, 'rgba(255, 214, 133, 0)');
+    context.fillStyle = beam;
+    context.fillRect(0, 0, width, height);
+    particles.forEach((particle, index) => {
+      const y = (particle.y * height - time * particle.speed * 5 + height) % height;
+      const x = particle.x * width + Math.sin(time * .8 + index) * 15;
+      context.beginPath();
+      context.fillStyle = `rgba(255, 224, 159, ${.22 + (Math.sin(time * 1.4 + index) + 1) * .18})`;
+      context.arc(x, y, particle.size, 0, Math.PI * 2);
+      context.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  image.onload = () => { imageReady = true; };
+  image.src = './opening-cover.jpg';
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(draw);
+}
+
 function startOpeningAnimation() {
   if (openingAnimationStarted) return;
   openingAnimationStarted = true;
-  entryVideo.currentTime = 0;
-  entryVideo.play().then(revealEntryVideo).catch(() => {});
+  startCanvasOpening();
   window.setTimeout(startInvitation, 8200);
 }
 
