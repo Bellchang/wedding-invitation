@@ -2,8 +2,6 @@ const musicButton = document.querySelector('#musicButton');
 const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 const entryGate = document.querySelector('#entryGate');
-const entryVideo = document.querySelector('#entryVideo');
-const entryCanvas = document.querySelector('#entryCanvas');
 const pages = [...document.querySelectorAll('.panel')];
 const longStoryPanel = document.querySelector('.long-story-panel');
 const storyScenes = [...document.querySelectorAll('.story-scene')];
@@ -87,7 +85,6 @@ function startInvitation() {
   if (isEnteringInvitation || entryGate.classList.contains('is-hidden')) return;
   isEnteringInvitation = true;
   entryGate.classList.add('is-hidden');
-  entryVideo.pause();
   window.setTimeout(() => entryGate.remove(), 600);
 }
 
@@ -187,7 +184,6 @@ function startCanvasOpening() {
 function startOpeningAnimation() {
   if (openingAnimationStarted) return;
   openingAnimationStarted = true;
-  startCanvasOpening();
   window.setTimeout(startInvitation, 8200);
 }
 
