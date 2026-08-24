@@ -7,10 +7,12 @@
     <title>我们的婚礼邀请函</title>
     <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="preload" href="./wedding-music.mp3" as="audio" type="audio/mpeg" />
-    <link rel="stylesheet" href="./styles.css?v=cover5" />
+    <link rel="preload" href="./wedding-invitation-story.mp4" as="video" type="video/mp4" />
+    <link rel="stylesheet" href="./styles.css?v=video1" />
   </head>
   <body>
     <section class="entry-gate" id="entryGate" aria-label="开启邀请函">
+      <video class="entry-video" id="entryVideo" src="./wedding-invitation-story.mp4" poster="./opening-cover.jpg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="metadata"></video>
       <div class="entry-gate__content">
         <p>昌然松 &amp; 陈思历</p>
         <h1>诚邀您见证<br />我们的幸福时刻</h1>
@@ -79,6 +81,6 @@
         <footer class="rsvp-footer">昌然松 &amp; 陈思历 敬邀<br /><span>愿所有美好，如期而至</span></footer>
       </section>
     </main>
-    <script src="./app.js?v=touch3"></script>
+    <script src="./app.js?v=video1"></script>
   </body>
 </html>
