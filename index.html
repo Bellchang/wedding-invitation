@@ -3,84 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#a72e38" />
-    <title>我们的婚礼邀请函</title>
-    <link rel="preconnect" href="https://images.unsplash.com" />
+    <meta name="theme-color" content="#26070d" />
+    <title>昌然松 & 陈思历 · 婚礼邀请函</title>
     <link rel="preload" href="./wedding-music.mp3" as="audio" type="audio/mpeg" />
-    <link rel="preload" href="./wedding-invitation-story.mp4" as="video" type="video/mp4" />
-    <link rel="stylesheet" href="./styles.css?v=video1" />
+    <link rel="stylesheet" href="./styles.css?v=home6" />
   </head>
   <body>
     <section class="entry-gate" id="entryGate" aria-label="开启邀请函">
       <video class="entry-video" id="entryVideo" src="./wedding-invitation-story.mp4" poster="./opening-cover.jpg" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="metadata"></video>
+      <div class="entry-gate__frame"></div>
+      <div class="entry-gate__animation" aria-hidden="true"><i class="gate-glow"></i><i class="gate-sunray"></i><i class="gate-ring gate-ring-one"></i><i class="gate-ring gate-ring-two"></i><i class="sun-speck speck-one"></i><i class="sun-speck speck-two"></i><i class="sun-speck speck-three"></i><i class="sun-speck speck-four"></i><i class="sun-speck speck-five"></i><i class="sun-speck speck-six"></i></div>
       <div class="entry-gate__content">
-        <p>昌然松 &amp; 陈思历</p>
-        <h1>诚邀您见证<br />我们的幸福时刻</h1>
-        <button id="enterInvitation" type="button">开启邀请函 <span>⌄</span></button>
-        <small>轻触开启，即可播放背景音乐</small>
+        <p>CHANG RANSONG &amp; CHEN SILI</p>
+        <h1>我们结婚啦</h1>
+        <button id="enterInvitation" type="button">开启邀请函 <span>→</span></button>
+        <small>轻触页面，开启音乐与邀请</small>
       </div>
     </section>
+
     <main class="invitation" id="top">
       <audio id="backgroundMusic" src="./wedding-music.mp3" loop preload="auto" playsinline webkit-playsinline x5-playsinline></audio>
-      <button class="music-button" id="musicButton" type="button" aria-label="播放背景音乐">
-        <span class="music-icon">♫</span><span id="musicText">音乐</span>
-      </button>
+      <button class="music-button" id="musicButton" type="button" aria-label="播放背景音乐"><span class="music-icon">♫</span><span id="musicText">音乐</span></button>
 
-      <section class="hero panel">
-        <div class="veil"></div>
-        <p class="eyebrow">WEDDING INVITATION</p>
-        <p class="date-stamp">2026 · 10 · 18</p>
-        <div class="rings" aria-hidden="true"><i></i><i></i></div>
-        <h1>昌然松 <em>&amp;</em> 陈思历</h1>
-        <p class="hero-copy">从此，两姓联姻<br />一堂缔约，良缘永结</p>
-        <button class="scroll-cue" type="button" data-next>点击开启邀请</button>
+      <section class="panel cover-panel is-active" aria-label="婚礼封面">
+        <div class="cover-photo photo-fill" data-photo-set="0"></div><div class="cover-shade"></div>
+        <div class="cover-animation" aria-hidden="true"><i class="cover-glow"></i><i class="cover-ring ring-one"></i><i class="cover-ring ring-two"></i><span class="petal petal-one">✦</span><span class="petal petal-two">✦</span><span class="petal petal-three">✦</span><span class="petal petal-four">✦</span><i class="maple-leaf leaf-one"></i><i class="maple-leaf leaf-two"></i><i class="maple-leaf leaf-three"></i><i class="maple-leaf leaf-four"></i><i class="maple-leaf leaf-five"></i><i class="maple-leaf leaf-six"></i><i class="maple-leaf leaf-seven"></i><i class="maple-leaf leaf-eight"></i></div>
+        <div class="cover-copy"><p class="microtype">WEDDING INVITATION · 2026</p><p class="cover-line"></p><h1>昌然松<span>&amp;</span>陈思历</h1><p class="cover-date">10 · 18 · SUNDAY</p></div>
+        <p class="tap-hint">轻触屏幕，翻开邀请</p>
       </section>
 
-      <section class="message panel" id="details">
-        <p class="section-kicker">TO OUR DEAR FRIENDS</p>
-        <h2>诚邀您见证<br />我们的幸福时刻</h2>
-        <p>岁月温柔，恰逢良人。<br />愿与最珍贵的你，共赴这场爱的约定。</p>
+      <section class="panel long-story-panel" aria-label="我们的故事">
+        <p class="story-counter"><span id="storyStep">01</span> / 03</p>
+        <article class="story-scene is-current" data-scene="0"><div class="photo-fill" data-photo-set="1"></div><div class="story-vignette"></div><div class="story-copy"><p class="microtype">CHAPTER 01 · 遇见</p><h2>人潮之中<br />我们看见了彼此</h2><p>原来，所有的恰好<br />都在为这一刻铺垫。</p></div></article>
+        <article class="story-scene" data-scene="1"><div class="photo-fill" data-photo-set="2"></div><div class="story-vignette"></div><div class="story-copy"><p class="microtype">CHAPTER 02 · 心动</p><h2>把并肩的日常<br />写成温柔的诗</h2><p>从一段旅程，到每一次回望，<br />身边始终是你。</p></div></article>
+        <article class="story-scene" data-scene="2"><div class="photo-fill" data-photo-set="3"></div><div class="story-vignette"></div><div class="story-copy"><p class="microtype">CHAPTER 03 · 约定</p><h2>今天，我们决定<br />共度往后的四季</h2><p>诚邀你，来见证<br />这份郑重而热烈的幸福。</p></div></article>
+        <p class="story-tap">轻触，聆听下一段故事</p>
       </section>
 
-      <section class="photo-stack panel" aria-label="新人照片">
-        <figure class="photo photo-main"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1000&q=85" alt="婚礼照片示例" /></figure>
-        <figure class="photo photo-small"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=700&q=85" alt="婚礼花束示例" /></figure>
-        <p>「 把平凡的日子，过成一生的浪漫 」</p>
+      <section class="panel story-panel" aria-label="新人照片">
+        <p class="microtype page-label">OUR STORY</p>
+        <div class="polaroid polaroid-large"><div class="photo-fill" data-photo-set="2"></div><span>with you, always</span></div><div class="polaroid polaroid-small"><div class="photo-fill" data-photo-set="3"></div></div>
+        <p class="story-copy">把每一个平凡的瞬间<br />过成我们独一无二的浪漫</p><p class="panel-index">03 / 05</p>
       </section>
 
-      <section class="schedule panel">
-        <p class="section-kicker">SAVE THE DATE</p>
-        <h2>婚礼安排</h2>
-        <div class="event-date"><strong>18</strong><span>2026年10月<br />星期日</span></div>
-        <dl>
-          <div><dt>11:08</dt><dd>迎宾签到</dd></div>
-          <div><dt>12:08</dt><dd>婚礼仪式</dd></div>
-          <div><dt>12:38</dt><dd>喜宴开席</dd></div>
-        </dl>
+      <section class="panel date-panel" aria-label="婚礼日期">
+        <div class="date-photo photo-fill" data-photo-set="4"></div>
+        <div class="date-card"><p class="microtype">SAVE THE DATE</p><div class="date-number">18</div><p class="date-meta">2026 · OCTOBER · SUNDAY</p><div class="date-rule"></div><p>愿你的到来<br />成为这一天最温柔的注脚</p></div>
+        <p class="panel-index">04 / 05</p>
       </section>
 
-      <section class="venue panel">
-        <p class="section-kicker">WHERE &amp; WHEN</p>
-        <h2>云栖花园酒店 · 宴会厅</h2>
-        <p>上海市徐汇区漕溪北路 88 号</p>
-        <a class="map-link" href="https://uri.amap.com/marker?position=121.4304,31.1931&name=%E4%BA%91%E6%A0%96%E8%8A%B1%E5%9B%AD%E9%85%92%E5%BA%97" target="_blank" rel="noreferrer">查看导航 <span>↗</span></a>
+      <section class="panel details-panel" aria-label="婚礼信息">
+        <p class="microtype page-label">CELEBRATION DETAILS</p><h2>婚礼安排</h2>
+        <dl class="timeline"><div><dt>11:08</dt><dd><b>迎宾签到</b><span>与我们共候良辰</span></dd></div><div><dt>12:08</dt><dd><b>婚礼仪式</b><span>见证誓言与欢喜</span></dd></div><div><dt>12:38</dt><dd><b>喜宴开席</b><span>共叙温暖时光</span></dd></div></dl>
+        <div class="venue-block"><p>婚礼地点</p><h3>云栖花园酒店 · 宴会厅</h3><span>上海市徐汇区漕溪北路 88 号</span><a href="https://uri.amap.com/marker?position=121.4304,31.1931&name=%E4%BA%91%E6%A0%96%E8%8A%B1%E5%9B%AD%E9%85%92%E5%BA%97" target="_blank" rel="noreferrer">查看导航 ↗</a></div>
+        <p class="panel-index">05 / 05</p>
       </section>
 
-      <section class="rsvp panel" id="rsvp">
-        <p class="section-kicker">RSVP</p>
-        <h2>请回复您的赴宴安排</h2>
-        <p>为了更好地为您安排席位，请于 10 月 8 日前回复。</p>
-        <form id="rsvpForm">
-          <label>您的称呼<input required name="name" maxlength="30" placeholder="请输入姓名" /></label>
-          <label>是否赴宴<select required name="attendance"><option value="">请选择</option><option value="赴宴">欣然赴宴</option><option value="无法赴宴">遗憾无法赴宴</option></select></label>
-          <label>同行人数<select required name="guests"><option value="1">1 人</option><option value="2">2 人</option><option value="3">3 人</option><option value="4">4 人</option><option value="0">不赴宴</option></select></label>
-          <label>想说的话<textarea name="note" maxlength="200" placeholder="留下您的祝福（选填）"></textarea></label>
-          <button class="submit" type="submit">提交回执</button>
-          <p class="form-result" id="formResult" aria-live="polite"></p>
-        </form>
-        <footer class="rsvp-footer">昌然松 &amp; 陈思历 敬邀<br /><span>愿所有美好，如期而至</span></footer>
+      <section class="panel rsvp-panel" id="rsvp" aria-label="赴宴回执">
+        <div class="rsvp-photo photo-fill" data-photo-set="0"></div>
+        <div class="rsvp-card"><p class="microtype">RSVP</p><h2>为你留一席欢喜</h2><p>请于 10 月 8 日前回复，我们期待与你相见。</p>
+          <form id="rsvpForm"><label>您的称呼<input required name="name" maxlength="30" placeholder="请输入姓名" /></label><label>是否赴宴<select required name="attendance"><option value="">请选择</option><option value="赴宴">欣然赴宴</option><option value="无法赴宴">遗憾无法赴宴</option></select></label><label>同行人数<select required name="guests"><option value="1">1 人</option><option value="2">2 人</option><option value="3">3 人</option><option value="4">4 人</option><option value="0">不赴宴</option></select></label><label>想说的话<textarea name="note" maxlength="200" placeholder="留下您的祝福（选填）"></textarea></label><button class="submit" type="submit">提交回执</button><p class="form-result" id="formResult" aria-live="polite"></p></form>
+        </div>
+        <footer>昌然松 &amp; 陈思历 敬邀<br /><span>愿所有美好，如期而至</span></footer>
       </section>
     </main>
-    <script src="./app.js?v=video1"></script>
+    <script src="./app.js?v=home4"></script>
   </body>
 </html>
