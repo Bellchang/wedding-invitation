@@ -19,6 +19,7 @@ let currentPage = 0;
 let currentStoryScene = 0;
 let isChangingStory = false;
 let isEnteringInvitation = false;
+let openingAnimationStarted = false;
 let photoTimer;
 
 function showMusicState(isPlaying, failed = false) {
@@ -100,8 +101,25 @@ async function startInvitation() {
   window.setTimeout(() => entryGate.remove(), 600);
 }
 
-function handleInvitationEntry(event) {
-  if (event.type === 'touchend') event.preventDefault();
+async function handleInvitationEntry() {
+  if (!openingAnimationStarted) {
+    openingAnimationStarted = true;
+    enterInvitation.disabled = true;
+    enterInvitation.textContent = '开场动画播放中…';
+    entryVideo.currentTime = 0;
+    entryGate.classList.add('is-video-ready');
+    playMusic();
+    try {
+      await entryVideo.play();
+      revealEntryVideo();
+      enterInvitation.disabled = false;
+      enterInvitation.innerHTML = '点击进入邀请函 <span>→</span>';
+    } catch {
+      enterInvitation.disabled = false;
+      enterInvitation.innerHTML = '点击进入邀请函 <span>→</span>';
+    }
+    return;
+  }
   startInvitation();
 }
 
@@ -124,7 +142,6 @@ function showStoryScene(index) {
 musicButton.addEventListener('click', toggleMusic);
 backgroundMusic.addEventListener('play', () => showMusicState(true));
 backgroundMusic.addEventListener('pause', () => showMusicState(false));
-entryGate.addEventListener('touchend', handleInvitationEntry, { passive: false });
 entryGate.addEventListener('click', handleInvitationEntry);
 backgroundMusic.load();
 function revealEntryVideo() {
