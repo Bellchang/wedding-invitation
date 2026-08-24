@@ -3,6 +3,7 @@ const musicText = document.querySelector('#musicText');
 const backgroundMusic = document.querySelector('#backgroundMusic');
 const entryGate = document.querySelector('#entryGate');
 const enterInvitation = document.querySelector('#enterInvitation');
+const entryVideo = document.querySelector('#entryVideo');
 const pages = [...document.querySelectorAll('.panel')];
 let currentPage = 0;
 let isEnteringInvitation = false;
@@ -49,6 +50,7 @@ async function startInvitation() {
     return;
   }
   entryGate.classList.add('is-hidden');
+  entryVideo.pause();
   window.setTimeout(() => entryGate.remove(), 600);
 }
 function handleInvitationEntry(event) {
@@ -58,6 +60,7 @@ function handleInvitationEntry(event) {
 entryGate.addEventListener('touchend', handleInvitationEntry, { passive: false });
 entryGate.addEventListener('click', handleInvitationEntry);
 backgroundMusic.load();
+entryVideo.play().catch(() => {});
 
 function showPage(index) {
   if (index < 0 || index >= pages.length || index === currentPage) return;
