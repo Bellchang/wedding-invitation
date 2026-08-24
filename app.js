@@ -184,7 +184,7 @@ function startCanvasOpening() {
 function startOpeningAnimation() {
   if (openingAnimationStarted) return;
   openingAnimationStarted = true;
-  window.setTimeout(startInvitation, 8200);
+  window.setTimeout(startInvitation, 12100);
 }
 
 startOpeningAnimation();
