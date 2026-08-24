@@ -127,7 +127,13 @@ backgroundMusic.addEventListener('pause', () => showMusicState(false));
 entryGate.addEventListener('touchend', handleInvitationEntry, { passive: false });
 entryGate.addEventListener('click', handleInvitationEntry);
 backgroundMusic.load();
-entryVideo.play().catch(() => {});
+function revealEntryVideo() {
+  if (entryVideo.currentTime > 0.05) entryGate.classList.add('is-video-ready');
+}
+
+entryVideo.addEventListener('playing', revealEntryVideo);
+entryVideo.addEventListener('timeupdate', revealEntryVideo, { once: true });
+entryVideo.play().then(revealEntryVideo).catch(() => {});
 
 initializePhotos();
 startPhotoLoop(pages[currentPage]);
