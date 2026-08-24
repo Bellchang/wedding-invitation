@@ -108,6 +108,8 @@ async function handleInvitationEntry() {
     enterInvitation.textContent = '开场动画播放中…';
     entryVideo.currentTime = 0;
     entryGate.classList.add('is-video-ready');
+    entryVideo.style.opacity = '1';
+    document.querySelector('.entry-fallback').style.opacity = '0';
     playMusic();
     try {
       await entryVideo.play();
@@ -145,7 +147,10 @@ backgroundMusic.addEventListener('pause', () => showMusicState(false));
 entryGate.addEventListener('click', handleInvitationEntry);
 backgroundMusic.load();
 function revealEntryVideo() {
-  if (entryVideo.currentTime > 0.05) entryGate.classList.add('is-video-ready');
+  if (entryVideo.currentTime <= 0.05) return;
+  entryGate.classList.add('is-video-ready');
+  entryVideo.style.opacity = '1';
+  document.querySelector('.entry-fallback').style.opacity = '0';
 }
 
 entryVideo.addEventListener('playing', revealEntryVideo);
